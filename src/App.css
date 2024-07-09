@@ -1,0 +1,23 @@
+/* styles.css */
+
+/* Set dark blue background for the whole app */
+body {
+    background-color: #0A1C2E;
+    font-family: 'Roboto Thin', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    color: #FFFFFF; /* White text color for the whole app */
+}
+
+/* Define a light blue cut border style for cards */
+.movie-card {
+    background-color: #0D2D4D; /* Darker blue for movie card background */
+    border: 2px solid #BFE2FF; /* Light blue border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 16px;
+    margin-bottom: 16px;
+    color: #FFFFFF; /* White text color for movie card */
+}
+
+/* Example of text color override */
+.movie-card-title {
+    color: #FFFFFF; /* White text color for card title */
+}

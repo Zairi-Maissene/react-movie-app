@@ -1,0 +1,25 @@
+
+/* Container for the details page */
+.details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+}
+
+/* Left column for the movie poster */
+.poster-container {
+    flex: 0 0 30%; /* Set width for the poster column */
+    margin-right: 20px; /* Space between poster and details */
+}
+
+.poster-img {
+    width: 100%; /* Ensure poster image fits container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Right column for movie details */
+.details-content {
+    flex: 1; /* Take remaining space */
+}

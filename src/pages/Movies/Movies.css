@@ -1,0 +1,65 @@
+.search-container {
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+}
+
+.search-title {
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    width: 100%;
+}
+
+.search-input input {
+    color: #FFFFFF;
+}
+
+.search-input .MuiOutlinedInput-root fieldset {
+    border-color: rgba(255, 255, 255, 0.23);
+}
+
+.search-input .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #00bcd4;
+}
+
+.search-input .MuiInputLabel-root {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-icon {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.no-movies-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    opacity: 0.7;
+}
+
+.movie-icon {
+    margin-bottom: 1rem;
+}
+
+.movie-grid {
+    margin-top: 1rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination .MuiPaginationItem-root {
+    color: #FFFFFF;
+}

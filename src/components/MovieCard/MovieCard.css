@@ -1,0 +1,26 @@
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.movie-info {
+    padding: 16px;
+    text-align: center;
+}
+
+.movie-title {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+}
+
+.movie-year,
+.movie-type {
+    font-size: 0.9em;
+    color: #777;
+    margin: 0;
+}

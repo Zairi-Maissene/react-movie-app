@@ -1,0 +1,27 @@
+.search-input {
+    width: 100%;
+}
+
+.search-input input {
+    color: #FFFFFF;
+}
+
+.search-input .MuiOutlinedInput-root fieldset {
+    border-color: rgba(255, 255, 255, 0.23);
+}
+
+.search-input .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #00bcd4;
+}
+
+.search-input .MuiInputLabel-root {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-icon {
+    color: rgba(255, 255, 255, 0.7);
+}
