@@ -16,7 +16,7 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Movies/>} />
-          <Route path="/detail/:id" element={<DetailPage/>} />
+          <Route path="/:id" element={<DetailPage/>} />
         </Routes>
       </Router>
       </LoaderOverlay>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { BASE_API_URL, API_KEY } from '../../constants/api';
 import useDebounce from '../../hooks/useDebounce';
 import { useLoading } from '../../context/LoadingContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -16,8 +17,6 @@ import {
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import './Movies.css';
 
-const API_KEY = import.meta.env.VITE_MOVIE_API_KEY as string;
-const BASE_URL = import.meta.env.VITE_MOVIE_API_URL as string;
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
@@ -39,7 +38,7 @@ const SearchPage = () => {
 
       setLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}?s=${debouncedSearch}&apikey=${API_KEY}&page=${currentPage}`);
+        const response = await fetch(`${BASE_API_URL}?s=${debouncedSearch}&apikey=${API_KEY}&page=${currentPage}`);
         if (!response.ok) {
           throw new Error('Failed to fetch movies');
         }

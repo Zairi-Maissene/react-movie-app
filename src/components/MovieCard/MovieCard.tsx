@@ -4,6 +4,7 @@ import { Movie } from '../../types/Movie';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CategoryIcon from '@mui/icons-material/Category';
 import { useNavigate } from 'react-router-dom';
+import { cardStyles, cardContentStyles } from './styles';
 
 interface MovieCardProps {
   movie: Movie;
@@ -14,22 +15,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   return (
     <Card
-      onClick={() => navigate(`/detail/${movie.imdbID}`)}
-      sx={{
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '15px',
-        transition: 'transform 0.3s, box-shadow 0.3s',
-        '&:hover': {
-          transform: 'translateY(-5px)',
-          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
-        },
-        color: '#FFFF',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      onClick={() => navigate(`/${movie.imdbID}`)}
+      sx={cardStyles}
     >
       <CardMedia
         component="img"
@@ -41,7 +28,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           objectFit: 'cover',
         }}
       />
-      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <CardContent sx={{cardContentStyles}}>
         <Box>
           <Typography gutterBottom variant="h6" component="div" noWrap sx={{ mb: 2 }}>
             {movie.Title}

@@ -1,6 +1,10 @@
+import { ArrowLeft } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { BASE_API_URL, API_KEY } from '../../constants/api';
 import { useLoading } from '../../context/LoadingContext';
+import { useNavigate } from 'react-router-dom';
 import {
   Typography,
   Chip,
@@ -14,8 +18,6 @@ import {
 import { MovieDetail } from '../../types/Movie';
 import { styled } from '@mui/material/styles';
 
-const API_KEY = import.meta.env.VITE_MOVIE_API_KEY as string;
-const BASE_URL = import.meta.env.VITE_MOVIE_API_URL as string;
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -41,14 +43,15 @@ const DetailPage: React.FC = () => {
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { setLoading } = useLoading();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
       if (!id) return;
-
       setLoading(true);
+
       try {
-        const response = await fetch(`${BASE_URL}?i=${id}&apikey=${API_KEY}`);
+        const response = await fetch(`${BASE_API_URL}?i=${id}&apikey=${API_KEY}`);
         if (!response.ok) {
           throw new Error('Failed to fetch movie details');
         }
@@ -76,6 +79,9 @@ const DetailPage: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Button onClick={() => navigate(-1)}>
+        <ArrowLeft fontSize="large" />
+      </Button>
       <Grid container spacing={4}>
         <Grid item xs={12} md={4}>
           <PosterImage src={movie.Poster} alt={movie.Title} />
