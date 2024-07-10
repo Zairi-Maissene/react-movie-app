@@ -3,19 +3,16 @@ import { Card, CardMedia, CardContent, Typography, Grid, Box } from '@mui/materi
 import { Movie } from '../../types/Movie';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CategoryIcon from '@mui/icons-material/Category';
-import { useNavigate } from 'react-router-dom';
 import { cardStyles, cardContentStyles } from './styles';
 
 interface MovieCardProps {
   movie: Movie;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
-  const navigate = useNavigate();
-
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
   return (
     <Card
-      onClick={() => navigate(`/${movie.imdbID}`)}
+      onClick={onClick}
       sx={cardStyles}
     >
       <CardMedia

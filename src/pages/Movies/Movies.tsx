@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { BASE_API_URL, API_KEY } from '../../constants/api';
 import useDebounce from '../../hooks/useDebounce';
+import { useNavigate } from 'react-router-dom';
 import { useLoading } from '../../context/LoadingContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { Movie } from '../../types';
+import { fetchMovies as requestMovies } from '../../api';
 import {
   Grid,
   Pagination,
@@ -17,15 +18,15 @@ import {
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import './Movies.css';
 
-
 const SearchPage = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(localStorage.getItem('lastSearch') || '');
   const [movies, setMovies] = useState<Movie[]>([]);
   const debouncedSearch = useDebounce(search, 500);
   const { setLoading } = useLoading();
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -35,23 +36,14 @@ const SearchPage = () => {
         setCurrentPage(1);
         return;
       }
-
       setLoading(true);
       try {
-        const response = await fetch(`${BASE_API_URL}?s=${debouncedSearch}&apikey=${API_KEY}&page=${currentPage}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch movies');
-        }
-        const data = await response.json();
-        if (data.Response === 'False') {
-          throw new Error('No movies matching the search term were found.');
-        }
+        const data = await requestMovies(debouncedSearch, currentPage);
         setMovies(data.Search);
         setTotalResults(Number(data.totalResults) || 0);
-        setError(null)
+        setError(null);
       } catch (error) {
         setError(error.message);
-        console.error('Failed to fetch movies', error);
       } finally {
         setLoading(false);
       }
@@ -64,6 +56,11 @@ const SearchPage = () => {
     setCurrentPage(page);
   };
 
+  const handleCardClick = (movie: Movie) => {
+    localStorage.setItem('lastSearch', search);
+    navigate(`/${movie.imdbID}`);
+  };
+
   const showPagination = totalResults > 10;
   const noMoviesFound = movies.length === 0 && !error;
 
@@ -73,11 +70,7 @@ const SearchPage = () => {
         <Typography variant="h4" gutterBottom align="center" className="search-title">
           Search Movies
         </Typography>
-        <SearchBar
-          value={search}
-          onChange={setSearch}
-          placeholder="Search for movies"
-        />
+        <SearchBar value={search} onChange={setSearch} placeholder="Search for movies" />
         {error && (
           <Typography color="error" align="center" sx={{ mt: 2 }}>
             {error}
@@ -101,7 +94,7 @@ const SearchPage = () => {
         <Grid container spacing={3} className="movie-grid">
           {movies.map((movie) => (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={movie.imdbID}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} onClick={() => handleCardClick(movie)} />
             </Grid>
           ))}
         </Grid>

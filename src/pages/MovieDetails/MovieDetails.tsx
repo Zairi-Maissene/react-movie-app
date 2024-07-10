@@ -2,8 +2,8 @@ import { ArrowLeft } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BASE_API_URL, API_KEY } from '../../constants/api';
 import { useLoading } from '../../context/LoadingContext';
+import { fetchMovieDetails as requestMovieDetails } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import {
   Typography,
@@ -18,24 +18,23 @@ import {
 import { MovieDetail } from '../../types/Movie';
 import { styled } from '@mui/material/styles';
 
-
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   backgroundColor: 'rgba(255, 255, 255, 0.05)',
   backdropFilter: 'blur(10px)',
-  borderRadius: '15px',
+  borderRadius: '15px'
 }));
 
 const PosterImage = styled('img')({
   width: '100%',
   borderRadius: '10px',
-  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
 });
 
 const LabelTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.main,
   fontWeight: 'bold',
-  display: 'inline',
+  display: 'inline'
 }));
 
 const DetailPage: React.FC = () => {
@@ -46,16 +45,11 @@ const DetailPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMovieDetail = async () => {
+    const fetchMovieDetails = async () => {
       if (!id) return;
       setLoading(true);
-
       try {
-        const response = await fetch(`${BASE_API_URL}?i=${id}&apikey=${API_KEY}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch movie details');
-        }
-        const data = await response.json();
+        const data = await requestMovieDetails(id);
         setMovie(data);
       } catch (error) {
         setError(error.message);
@@ -64,22 +58,36 @@ const DetailPage: React.FC = () => {
       }
     };
 
-    fetchMovieDetail();
+    fetchMovieDetails();
   }, [id, setLoading]);
 
+  const handleBackArrowClick = () => {
+    navigate(-1);
+  };
+
   if (error) {
-    return <Container><Typography color="error">{error}</Typography></Container>;
+    return (
+      <Container>
+        <Typography color="error">{error}</Typography>
+      </Container>
+    );
   }
 
   if (!movie) {
-    return <Container><Typography>Loading...</Typography></Container>;
+    return (
+      <Container>
+        <Typography>Loading...</Typography>
+      </Container>
+    );
   }
 
-  const imdbRating = movie.Ratings.find(rating => rating.Source === "Internet Movie Database");
+  const imdbRating = movie.Ratings.find(
+    (rating) => rating.Source === 'Internet Movie Database'
+  );
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Button onClick={() => navigate(-1)}>
+      <Button sx={{ m: 2 }} onClick={handleBackArrowClick}>
         <ArrowLeft fontSize="large" />
       </Button>
       <Grid container spacing={4}>
@@ -114,17 +122,20 @@ const DetailPage: React.FC = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1">
-                  <LabelTypography>Director: </LabelTypography> {movie.Director}
+                  <LabelTypography>Director: </LabelTypography>{' '}
+                  {movie.Director}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1">
-                  <LabelTypography>Writers: </LabelTypography> {movie.Writer}
+                  <LabelTypography>Writers: </LabelTypography>{' '}
+                  {movie.Writer}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">
-                  <LabelTypography>Actors: </LabelTypography> {movie.Actors}
+                  <LabelTypography>Actors: </LabelTypography>{' '}
+                  {movie.Actors}
                 </Typography>
               </Grid>
             </Grid>
