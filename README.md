@@ -12,6 +12,7 @@ This is a React application that allows users to search for movies and view deta
 ## Features
 
 - Search for movies by title
+- Paginated search results through a large collection of movies
 - View detailed information about movies, including title, year, genre, director, actors, plot, ratings, and more
 - Responsive design
 
